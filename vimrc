@@ -1,6 +1,6 @@
 let mapleader = ";"    " 比较习惯用;作为命令前缀，右手小拇指直接能按到
 " ^z快速进入shell
-nmap <C-Z> :shell<cr>
+"nmap <C-Z> :shell<cr>
 inoremap <leader>n <esc>
 
 " 判断操作系统
@@ -326,23 +326,41 @@ let g:bufExplorerSplitVertSize = s:PlugWinSize  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 autocmd BufWinEnter \[Buf\ List\] setl nonumber
 nmap <silent> <Leader>b :BufExplorer<CR>
-
-" Minibuffer
-"let g:miniBufExpIMapWindowNavVim = 1
-
-" Vimwiki配置
-let g:vimwiki_list = [{'path': '~/Dropbox/MyWiki/my_site/',
-            \ 'path-html': '~/Dropbox/MyWiki/my_site_html/',
-            \ 'html-header': '~/Dropbox/MyWiki/templates/header.tpl',
-            \ 'html-footer': '~/Dropbox/MyWiki/templates/footer.tpl'}]
-let g:vimwiki_camel_case=0
-
-let wiki = {}
-let wiki.path = '~/Dropbox/MyWiki/my_site/'
-let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
-let g:vimwiki_list = [wiki]
-
 "pythoncomplete配置
 autocmd filetype python set omnifunc=pythoncomplete#Complete
-"F12 运行python程序
-map <F12> :!python %
+"F10运行scrot截屏
+map <F10> :!scrot -s -d 4 -e 'mv $f ~/Pictures/'<cr>
+
+"F2编译
+map <F2> :call CompileCode()<cr>
+"F12运行
+map <F12> :call RunCode()<cr>
+
+
+function! CompileCode()
+    exec "w"
+    if &filetype == "c"
+        exec "!gcc -Wall -std=c99 %<.c -o %<"
+    elseif &filetype == "cpp"
+        exec "!g++ -Wall -std=c++98 %<.cpp -o %<"
+    elseif &filetype == "java"
+        exec "!javac %<.java"
+    elseif &filetype == "python"
+        exec "!python %<.py"
+    endif
+endfunction
+
+function! RunCode()
+    exec "w"
+    if &filetype == "c" || &filetype == "cpp"
+        exec "! %<"
+    elseif &filetype == "java"
+        exec "!java %<"
+    elseif &filetype == "python"
+        exec "!python %<.py"
+    endif
+endfunction
+
+
+
+
