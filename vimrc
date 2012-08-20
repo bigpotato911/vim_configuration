@@ -207,6 +207,7 @@ imap <C-D>             <C-X><C-D>
 imap <C-L>             <C-X><C-L>
 
 "Neocomlcache.vim
+"http://www.vim.org/scripts/script.php?script_id=2620
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_auto_completion_start_length = 3
 let g:neocomplcache_enable_auto_select = 1
