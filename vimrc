@@ -329,8 +329,15 @@ nmap <silent> <Leader>b :BufExplorer<CR>
 "pythoncomplete配置
 autocmd filetype python set omnifunc=pythoncomplete#Complete
 "F10运行scrot截屏
-map <F10> :!scrot -s -d 4 -e 'mv $f ~/Pictures/'<cr>
+"map <F10> :!scrot -s -d 4 -e 'mv $f ~/Pictures/'<cr>
+map <F10> :call Snapshot()<cr>
 
+function! Snapshot()
+    exec "w"
+    exec "!bg"
+    exec "!scrot -s -e 'mv $f ~/Pictures/'"
+    "exec "fg"
+endfunction
 "F2编译
 map <F2> :call CompileCode()<cr>
 "F12运行
