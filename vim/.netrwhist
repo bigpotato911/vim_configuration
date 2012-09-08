@@ -1,6 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/home/lenovo/.config'
 let g:netrw_dirhist_2='/etc'
 let g:netrw_dirhist_3='/home/lenovo'
 let g:netrw_dirhist_4='/home/lenovo/.vim'
+let g:netrw_dirhist_5='/home/lenovo/.gconf/desktop/gnome/shell'
+let g:netrw_dirhist_6='/home/lenovo/Projects/test'

@@ -205,14 +205,21 @@ imap <C-]>             <C-X><C-]>
 imap <C-F>             <C-X><C-F>
 imap <C-D>             <C-X><C-D>
 imap <C-L>             <C-X><C-L>
+"add python tags 
+set tags+=/home/lenovo/Tools/vim/cpp.tags
+
+
 
 "Neocomlcache.vim
 "http://www.vim.org/scripts/script.php?script_id=2620
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_auto_completion_start_length = 3
 let g:neocomplcache_enable_auto_select = 1
-
-
+" Define dictionary. 
+"let g:neocomplcache_dictionary_filetype_lists = { 
+"    \ 'default' : '', 
+"    \ 'vimshell' : $HOME.'/.vim/dic/complete-dict' 
+"    \ } 
 
 " NERD_commenter.vim
 " http://www.vim.org/scripts/script.php?script_id=1218
@@ -329,16 +336,7 @@ autocmd BufWinEnter \[Buf\ List\] setl nonumber
 nmap <silent> <Leader>b :BufExplorer<CR>
 "pythoncomplete配置
 autocmd filetype python set omnifunc=pythoncomplete#Complete
-"F10运行scrot截屏
-"map <F10> :!scrot -s -d 4 -e 'mv $f ~/Pictures/'<cr>
-map <F10> :call Snapshot()<cr>
 
-function! Snapshot()
-    exec "w"
-    exec "!bg"
-    exec "!scrot -s -e 'mv $f ~/Pictures/'"
-    "exec "fg"
-endfunction
 "F2编译
 map <F2> :call CompileCode()<cr>
 "F12运行
@@ -368,7 +366,6 @@ function! RunCode()
         exec "!python %<.py"
     endif
 endfunction
-
 
 
 

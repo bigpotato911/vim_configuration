@@ -88,7 +88,17 @@ snippet _
 #actually I add some html snippet here hope to complete the html stuff in the python script
 #my personal modification begin -----------------------------------------
 
-snippet html
+snippet html	
+	html>
+		<head>
+		<title>${1}</title>
+		</head>
+		<body>
+			<h1>${2}</h1>
+		</body>
+	</html>
+snippet xhtml
+
 	html>
 	${1}
 	</html>
@@ -102,7 +112,7 @@ snippet body
 	</body>
 snippet head
 	head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8"`Close()`>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 
 		<title>${1:`substitute(Filename('', 'Page Title'), '^.', '\u&', '')`}</title>
 		${2}
@@ -120,7 +130,7 @@ snippet style
 		${2}
 	</style>${3}
 snippet base
-	base href="${1}" target="${2}"`Close()`>
+	base href="${1}" target="${2}">
 snippet div
 	div id="${1:name}">
 		${2}
