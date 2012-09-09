@@ -162,13 +162,13 @@ endfunction
 
 " 快捷输入
 " 自动完成括号和引号
-inoremap <leader>1 ()<esc>:let leavechar=")"<cr>i
-inoremap <leader>2 []<esc>:let leavechar="]"<cr>i
-inoremap <leader>3 {}<esc>:let leavechar="}"<cr>i
-inoremap <leader>4 {<esc>o}<esc>:let leavechar="}"<cr>O
-inoremap <leader>q ''<esc>:let leavechar="'"<cr>i
-inoremap <leader>w ""<esc>:let leavechar='"'<cr>i
-
+inoremap ( ()<esc>:let leavechar=")"<cr>i
+inoremap [ []<esc>:let leavechar="]"<cr>i
+inoremap { {<esc>o}<esc>:let leavechar="}"<cr>O
+inoremap ' ''<esc>:let leavechar="'"<cr>i
+inoremap " ""<esc>:let leavechar='"'<cr>i
+inoremap <leader>1 ()<esc>a
+inoremap <leader>2 {}<esc>:let leavechar="}"<cr>i
 
 " 插件窗口的宽度，如TagList,NERD_tree等，自己设置
 let s:PlugWinSize = 25
