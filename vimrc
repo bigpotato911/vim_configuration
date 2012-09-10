@@ -206,8 +206,9 @@ imap <C-]>             <C-X><C-]>
 imap <C-F>             <C-X><C-F>
 imap <C-D>             <C-X><C-D>
 imap <C-L>             <C-X><C-L>
-"add python tags 
-set tags+=/home/lenovo/Tools/vim/cpp.tags
+"add cpp tags 
+set tags+=~/.vim/tags/cpptags
+set tags+=~/.vim/tags/systags
 
 
 
