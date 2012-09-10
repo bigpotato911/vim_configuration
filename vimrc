@@ -167,6 +167,7 @@ inoremap [ []<esc>:let leavechar="]"<cr>i
 inoremap { {<esc>o}<esc>:let leavechar="}"<cr>O
 inoremap ' ''<esc>:let leavechar="'"<cr>i
 inoremap " ""<esc>:let leavechar='"'<cr>i
+inoremap < <><esc>:let leavechar='>'<cr>i
 inoremap <leader>1 ()<esc>a
 inoremap <leader>2 {}<esc>:let leavechar="}"<cr>i
 
@@ -340,32 +341,100 @@ autocmd filetype python set omnifunc=pythoncomplete#Complete
 "F2编译
 map <F2> :call CompileCode()<cr>
 "F12运行
-map <F12> :call RunCode()<cr>
+map <F12> :call RunResult()<cr>
 
 
-function! CompileCode()
+func! CompileGcc()
     exec "w"
-    if &filetype == "c"
-        exec "!gcc -Wall -std=c99 %<.c -o %<"
-    elseif &filetype == "cpp"
-        exec "!g++ -Wall -std=c++98 %<.cpp -o %<"
-    elseif &filetype == "java"
-        exec "!javac %<.java"
-    elseif &filetype == "python"
-        exec "!python %<.py"
+    let compilecmd="gcc "
+    let compileflag="-Wall -std=c99 -o %< "
+    if search("mpi\.h") != 0
+        let compilecmd = "!mpicc "
     endif
-endfunction
-
-function! RunCode()
+    if search("glut\.h") != 0
+        let compileflag .= " -lglut -lGLU -lGL "
+    endif
+    if search("cv\.h") != 0
+        let compileflag .= " -lcv -lhighgui -lcvaux "
+    endif
+    if search("omp\.h") != 0
+        let compileflag .= " -fopenmp "
+    endif
+    if search("math\.h") != 0
+        let compileflag .= " -lm "
+    endif
+    compiler gcc
+    let s:oldmp = &makeprg
+    let &makeprg = compilecmd." % ".compileflag
+    make
+    let &makeprg = s:oldmp
+    execute "copen"
+    " exec compilecmd." % ".compileflag
+endfunc
+func! CompileGpp()
     exec "w"
-    if &filetype == "c" || &filetype == "cpp"
-        exec "! %<"
-    elseif &filetype == "java"
-        exec "!java %<"
-    elseif &filetype == "python"
-        exec "!python %<.py"
+    let compilecmd="g++ "
+    let compileflag="-Wall -std=c++98 -o %< "
+    if search("mpi\.h") != 0
+        let compilecmd = "!mpic++ "
     endif
-endfunction
+    if search("glut\.h") != 0
+        let compileflag .= " -lglut -lGLU -lGL "
+    endif
+    if search("cv\.h") != 0
+        let compileflag .= " -lcv -lhighgui -lcvaux "
+    endif
+    if search("omp\.h") != 0
+        let compileflag .= " -fopenmp "
+    endif
+    if search("math\.h") != 0
+        let compileflag .= " -lm "
+    endif
+    compiler gcc
+    let s:oldmp = &makeprg
+    let &makeprg = compilecmd." % ".compileflag
+    make
+    let &makeprg = s:oldmp
+
+    execute "copen"
+    " exec compilecmd." % ".compileflag
+endfunc
+
+func! RunPython()
+        exec "!python %"
+    endfunc
+func! CompileJava()
+   "" exec !javac %
+   let &makeprg = "javac %"
+   make
+   execute "copen"
+endfunc
 
 
+func! CompileCode()
+        exec "w"
+        if &filetype == "cpp"
+                exec "call CompileGpp()"
+        elseif &filetype == "c"
+                exec "call CompileGcc()"
+        elseif &filetype == "python"
+                exec "call RunPython()"
+        elseif &filetype == "java"
+                exec "call CompileJava()"
+        endif
+endfunc
 
+func! RunResult()
+        exec "w"
+        if search("mpi\.h") != 0
+            exec "!mpirun -np 4 ./%<"
+        elseif &filetype == "cpp"
+            exec "! ./%<"
+        elseif &filetype == "c"
+            exec "! ./%<"
+        elseif &filetype == "python"
+            exec "call RunPython"
+        elseif &filetype == "java"
+            exec "!java %<"
+        endif
+endfunc
